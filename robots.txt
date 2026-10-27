@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /templates/
+Disallow: /scripts/
+
+Sitemap: https://www.yousecosmetics.com.br/sitemap.xml

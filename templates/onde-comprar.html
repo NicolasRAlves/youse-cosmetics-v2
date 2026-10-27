@@ -1,0 +1,42 @@
+{{head}}
+<body class="pg-onde">
+{{header}}
+<main id="conteudo">
+  <section class="pg-topo" aria-labelledby="onde-titulo">
+    <div class="pg-topo__fios" aria-hidden="true">{{fios}}</div>
+    <div class="container">
+      <nav class="trilha" aria-label="Você está em"><ol><li><a href="../">Home</a></li><li><span aria-current="page">Onde comprar</span></li></ol></nav>
+      <p class="eyebrow">Onde comprar</p>
+      <h1 class="display display--md" id="onde-titulo">Onde encontrar a <em>Youse</em>.</h1>
+      <p class="lead">A Youse Cosmetics é vendida em dois canais online. Escolha o seu: os botões abrem direto a página da marca em cada loja.</p>
+    </div>
+  </section>
+
+  <section class="secao secao--sem-topo" aria-label="Lojas">
+    <div class="container">
+      {{lojas}}
+    </div>
+  </section>
+
+  <section class="secao onde-extra">
+    <div class="container onde-extra__grade">
+      <div class="onde-extra__foto" data-reveal>{{foto_linha}}</div>
+      <div class="onde-extra__cards">
+        <div class="cartao" data-reveal>
+          <h2 class="titulo titulo--sm">Ficou com dúvida antes de comprar?</h2>
+          <p>Fale com a equipe Youse pelo WhatsApp {{telefone}}: ajudamos a escolher o produto certo para o seu fio.</p>
+          <a class="btn btn--primario" href="{{wa_geral}}" {{ext}}>{{i_wa}} Falar no WhatsApp</a>
+        </div>
+        <div class="cartao" data-reveal>
+          <h2 class="titulo titulo--sm">É salão, loja ou profissional?</h2>
+          <p>Compre no atacado e revenda a linha completa Youse.</p>
+          <a class="btn btn--fantasma" href="../seja-distribuidor/">Seja distribuidor {{i_seta}}</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+{{footer}}
+{{scripts}}
+</body>
+</html>

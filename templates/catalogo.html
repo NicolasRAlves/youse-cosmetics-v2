@@ -1,0 +1,35 @@
+{{head}}
+<body class="pg-catalogo">
+{{header}}
+<main id="conteudo">
+  <section class="pg-topo" aria-labelledby="cat-titulo">
+    <div class="pg-topo__fios" aria-hidden="true">{{fios}}</div>
+    <div class="container">
+      <nav class="trilha" aria-label="Você está em"><ol><li><a href="../">Home</a></li><li><span aria-current="page">Produtos</span></li></ol></nav>
+      <p class="eyebrow">A coleção completa</p>
+      <h1 class="display display--md" id="cat-titulo">Todos os <em>produtos</em>.</h1>
+      <p class="lead">Doze tratamentos, do alinhamento à finalização. Filtre pela linha ou pela necessidade do seu cabelo — ou <a href="../#diagnostico">faça o diagnóstico</a> e receba um ritual pronto.</p>
+    </div>
+  </section>
+
+  <section class="secao secao--sem-topo" aria-label="Lista de produtos">
+    <div class="container">
+      {{filtros}}
+      <ul class="grade-p" data-filtro-alvo="catalogo">
+{{produtos}}
+      </ul>
+    </div>
+  </section>
+
+  <section class="secao cta-diag">
+    <div class="container cta-diag__in">
+      <h2 class="titulo titulo--md">Não sabe por onde <em>começar</em>?</h2>
+      <p>Responda uma pergunta e receba um ritual de três passos.</p>
+      <a class="btn btn--primario btn--lg" href="../#diagnostico">Fazer meu diagnóstico {{i_seta}}</a>
+    </div>
+  </section>
+</main>
+{{footer}}
+{{scripts}}
+</body>
+</html>

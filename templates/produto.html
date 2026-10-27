@@ -1,0 +1,165 @@
+{{head}}
+<body class="pg-produto" style="{{estilo_cor}}" data-produto="{{slug}}">
+{{header}}
+<main id="conteudo">
+
+  <!-- 1–2. TRILHA + HERO DO PRODUTO -->
+  <section class="p-hero" aria-labelledby="p-nome">
+    <div class="p-hero__fios" aria-hidden="true">{{fios}}</div>
+    <div class="container">
+      <nav class="trilha" aria-label="Você está em">
+        <ol>
+          <li><a href="{{b}}">Home</a></li>
+          <li><a href="{{b}}produtos/">Produtos</a></li>
+          <li><a href="{{b}}produtos/?linha={{categoria_id}}">{{categoria}}</a></li>
+          <li><span aria-current="page">{{nome}}</span></li>
+        </ol>
+      </nav>
+      <div class="p-hero__grade">
+        <div class="p-hero__texto">
+          <p class="p-hero__tag">{{tag}}</p>
+          <h1 class="p-hero__nome display" id="p-nome">{{nome}}</h1>
+          <p class="p-hero__sub">{{subtitulo}}</p>
+          <p class="p-hero__resumo">{{resumo}}</p>
+          {{kit}}
+          <div class="p-hero__ctas" id="comprar">
+            <a class="btn btn--escuro btn--lg" href="{{ml}}" {{ext}}>{{i_sacola}} Comprar no Mercado Livre</a>
+            <a class="btn btn--contorno-tinta btn--lg" href="{{dot}}" {{ext}}>Comprar na Dot Cosméticos {{i_externo}}</a>
+          </div>
+          <ul class="p-hero__links">
+            <li><a href="{{wa_distribuidor}}" {{ext}}>{{i_loja}} Quero revender</a></li>
+            <li><a href="{{wa_produto}}" {{ext}}>{{i_wa}} Tirar dúvida no WhatsApp</a></li>
+          </ul>
+        </div>
+        <div class="p-hero__media" data-parallax="0.05">
+          <span class="p-hero__disco" aria-hidden="true"></span>
+          {{foto}}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. BENEFÍCIOS -->
+  <section class="beneficios" aria-label="Benefícios do {{nome}}">
+    <ul class="beneficios__lista container">{{beneficios}}</ul>
+  </section>
+
+  <!-- 4. DESCRIÇÃO + ATIVOS E TECNOLOGIAS -->
+  <section class="secao p-sobre" aria-labelledby="ativos-titulo">
+    <div class="container p-sobre__grade">
+      <div class="p-sobre__texto">
+        <p class="eyebrow">{{nome_completo}}</p>
+        <p class="p-sobre__desc">{{descricao}}</p>
+      </div>
+      <div>
+        <h2 class="titulo titulo--md" id="ativos-titulo">Ativos e <em>tecnologias</em></h2>
+        <ul class="ativos">
+      {{ativos}}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <div class="divisor divisor--cor" aria-hidden="true">{{fios_div}}</div>
+
+  <!-- 5. COMO USAR -->
+  <section class="secao p-uso" id="como-usar" aria-labelledby="uso-titulo">
+    <div class="container p-uso__grade">
+      <header class="secao__cab">
+        <p class="eyebrow">Passo a passo</p>
+        <h2 class="titulo" id="uso-titulo">Como <em>usar</em>.</h2>
+        <p class="secao__intro">Os passos oficiais da Youse. Nas etapas com pausa, use o cronômetro: ele segue contando com o celular na bancada.</p>
+      </header>
+      <ol class="passos">
+    {{passos}}
+      </ol>
+    </div>
+  </section>
+
+  <!-- 6. RESULTADO -->
+  <section class="secao p-resultado" aria-labelledby="res-titulo">
+    <div class="container">
+      <header class="secao__cab">
+        <p class="eyebrow">Resultado</p>
+        <h2 class="titulo" id="res-titulo">Veja o <em>resultado</em>.</h2>
+      </header>
+      <div class="p-resultado__grade">
+    {{resultado}}
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. MONTE SEU RITUAL -->
+  <section class="secao p-ritual" aria-labelledby="ritual-titulo">
+    <div class="container">
+      <header class="secao__cab secao__cab--linha">
+        <div>
+          <p class="eyebrow">Combina com</p>
+          <h2 class="titulo" id="ritual-titulo">Monte seu <em>ritual</em>.</h2>
+        </div>
+        <p class="secao__intro">O {{nome}} rende mais quando entra na sequência certa. <a href="{{b}}#diagnostico">Faça o diagnóstico</a> para ver outros rituais.</p>
+      </header>
+      {{ritual}}
+    </div>
+  </section>
+
+  <!-- 8. FAQ -->
+  <section class="secao p-faq" aria-labelledby="faq-titulo">
+    <div class="container p-faq__grade">
+      <header class="secao__cab">
+        <p class="eyebrow">Dúvidas</p>
+        <h2 class="titulo" id="faq-titulo">Perguntas <em>frequentes</em>.</h2>
+        <p class="secao__intro">Não achou a sua? <a href="{{wa_produto}}" {{ext}}>Pergunte no WhatsApp</a>.</p>
+      </header>
+      <div class="faq">
+      {{faq}}
+      </div>
+    </div>
+  </section>
+
+  <!-- Onde comprar (repetição do CTA) -->
+  <section class="p-comprar" aria-labelledby="comprar-titulo">
+    <div class="container p-comprar__in">
+      <h2 class="titulo titulo--md" id="comprar-titulo">Leve o {{nome}} para casa.</h2>
+      <div class="p-comprar__btns">
+        <a class="btn btn--escuro" href="{{ml}}" {{ext}}>Comprar no Mercado Livre {{i_externo}}</a>
+        <a class="btn btn--contorno-tinta" href="{{dot}}" {{ext}}>Comprar na Dot Cosméticos {{i_externo}}</a>
+        <a class="btn btn--contorno-tinta" href="{{wa_distribuidor}}" {{ext}}>{{i_loja}} Quero revender</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9. ANTERIOR / PRÓXIMO -->
+  <nav class="p-nav container" aria-label="Outros produtos">
+    <a class="p-nav__link" href="{{ant_url}}" style="{{ant_cor}}" rel="prev"><span class="p-nav__dir">{{i_seta_esq}} Produto anterior</span><span class="p-nav__nome">{{ant_nome}}</span></a>
+    <a class="p-nav__link p-nav__link--prox" href="{{prox_url}}" style="{{prox_cor}}" rel="next"><span class="p-nav__dir">Próximo produto {{i_seta}}</span><span class="p-nav__nome">{{prox_nome}}</span></a>
+  </nav>
+
+</main>
+
+<!-- 10. BARRA FIXA DE COMPRA (mobile) -->
+<div class="barra-compra" data-barra-compra aria-hidden="true" inert>
+  <div class="barra-compra__menu" id="barra-menu" hidden>
+    <a href="{{ml}}" {{ext}}>Mercado Livre {{i_externo}}</a>
+    <a href="{{dot}}" {{ext}}>Dot Cosméticos {{i_externo}}</a>
+  </div>
+  <div class="barra-compra__in">
+    <span class="barra-compra__nome"><small>{{tag}}</small>{{nome}}</span>
+    <a class="barra-compra__wa" href="{{wa_produto}}" {{ext}} aria-label="Tirar dúvida sobre o {{nome}} no WhatsApp">{{i_wa}}</a>
+    <button class="btn btn--escuro btn--sm" type="button" aria-expanded="false" aria-controls="barra-menu" data-barra-btn>{{i_sacola}} Comprar</button>
+  </div>
+</div>
+
+<!-- Cronômetro de pausa -->
+<div class="timer" data-timer-painel hidden role="region" aria-label="Cronômetro de pausa">
+  <span class="timer__anel" aria-hidden="true"><svg viewBox="0 0 44 44"><circle cx="22" cy="22" r="19"/><circle class="timer__prog" cx="22" cy="22" r="19" pathLength="100"/></svg>{{i_relogio}}</span>
+  <span class="timer__info"><small data-timer-rotulo></small><strong class="timer__tempo" data-timer-tempo aria-live="off">00:00</strong></span>
+  <button class="timer__btn" type="button" data-timer-pausa aria-label="Pausar cronômetro">{{i_pause}}</button>
+  <button class="timer__btn" type="button" data-timer-fechar aria-label="Encerrar cronômetro">{{i_fechar}}</button>
+  <p class="sr" aria-live="assertive" data-timer-aviso></p>
+</div>
+
+{{footer}}
+{{scripts}}
+</body>
+</html>

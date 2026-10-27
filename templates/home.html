@@ -1,0 +1,173 @@
+{{head}}
+<body class="pg-home">
+{{header}}
+<main id="conteudo">
+
+  <!-- 2. HERO -->
+  <section class="hero" aria-labelledby="hero-titulo">
+    <div class="hero__fios" aria-hidden="true">{{fios_hero}}</div>
+    <div class="hero__grade container">
+      <div class="hero__texto">
+        <p class="eyebrow">Youse Cosmetics® · A jornada cromática</p>
+        <h1 class="display" id="hero-titulo">A jornada da sua <em>transformação</em> capilar.</h1>
+        <p class="lead">Tecnologia e ingredientes naturais para transformar a saúde dos seus fios — do efeito liso sem química agressiva à manutenção em casa.</p>
+        <div class="hero__ctas">
+          <a class="btn btn--primario btn--lg" href="#diagnostico">Fazer meu diagnóstico {{i_seta}}</a>
+          <a class="btn btn--fantasma btn--lg" href="#resultados">{{i_play}} Ver resultados</a>
+        </div>
+      </div>
+      <div class="hero__arco" data-parallax="0.04">
+        <div class="hero__fotos">
+          {{hero_fotos}}
+        </div>
+        <p class="hero__selo"><span>12 produtos</span><span>12 cores</span></p>
+      </div>
+    </div>
+    {{faixa_cromatica}}
+  </section>
+
+  <!-- 3. DIFERENCIAIS -->
+  <section class="diferenciais" aria-label="Diferenciais Youse">
+    <ul class="diferenciais__lista container">
+      <li data-reveal>{{i_gota}}<div><h2>Efeito liso sem química agressiva</h2><p>Youliss e Quiabo alinham os fios, reduzem o frizz e devolvem o brilho.</p></div></li>
+      <li data-reveal>{{i_atomo}}<div><h2>Extrato de quiabo + Nano Active</h2><p>O ativo-assinatura da marca, com nanotecnologia no BTX Quiabo.</p></div></li>
+      <li data-reveal>{{i_casa}}<div><h2>Do salão para casa</h2><p>Linha completa, do tratamento à manutenção, para cuidar dos fios em casa.</p></div></li>
+    </ul>
+  </section>
+
+  <!-- 4. RESULTADOS EM VÍDEO (Stories) -->
+  <section class="secao resultados" id="resultados" aria-labelledby="resultados-titulo">
+    <div class="container">
+      <header class="secao__cab">
+        <p class="eyebrow">Stories Youse</p>
+        <h2 class="titulo" id="resultados-titulo">Resultados em <em>movimento</em>.</h2>
+        <p class="secao__intro">Vídeos reais da marca, do primeiro passo ao acabamento. Toque para assistir em tela cheia.</p>
+      </header>
+      <ul class="stories-grade">
+{{stories}}
+      </ul>
+    </div>
+  </section>
+  {{player}}
+
+  <!-- 5. ANTES & DEPOIS -->
+  <section class="secao antes-depois" id="antes-depois" aria-labelledby="ad-titulo">
+    <div class="container ad-grade">
+      <header class="secao__cab ad-grade__texto">
+        <p class="eyebrow">Antes &amp; depois</p>
+        <h2 class="titulo" id="ad-titulo">Arraste e veja a <em>transformação</em>.</h2>
+        <p class="secao__intro">Fotos reais de cliente e quadros dos vídeos da Youse: o mesmo cabelo, antes e depois do tratamento.</p>
+        <p class="ad-dica">Arraste a linha ou use as setas do teclado.</p>
+      </header>
+      <div class="ad-grade__comp" data-reveal>
+        {{antes_depois}}
+      </div>
+    </div>
+  </section>
+
+  <div class="divisor" aria-hidden="true">{{fios_div}}</div>
+
+  <!-- 6. DIAGNÓSTICO CAPILAR -->
+  <section class="secao diagnostico" id="diagnostico" aria-labelledby="diag-titulo">
+    <div class="container">
+      <header class="secao__cab secao__cab--centro">
+        <p class="eyebrow">Diagnóstico capilar</p>
+        <h2 class="titulo" id="diag-titulo">Encontre a sua <em>química</em> perfeita.</h2>
+        <p class="secao__intro">Uma pergunta, um ritual de três passos. Sem cadastro.</p>
+      </header>
+      {{diagnostico}}
+    </div>
+  </section>
+
+  <!-- 7. A COLEÇÃO -->
+  <section class="secao colecao" id="colecao" aria-labelledby="colecao-titulo">
+    <div class="container">
+      <header class="secao__cab secao__cab--linha">
+        <div>
+          <p class="eyebrow">A coleção</p>
+          <h2 class="titulo" id="colecao-titulo">Cada fio, uma <em>cor</em>.</h2>
+        </div>
+        <p class="secao__intro">Doze tratamentos, cada um com a sua cor. Filtre pela linha ou pelo que o seu cabelo pede.</p>
+      </header>
+      {{filtros}}
+      <ul class="grade-p" data-filtro-alvo="colecao">
+{{colecao}}
+      </ul>
+    </div>
+  </section>
+
+  <!-- 8. INGREDIENTES -->
+  <section class="secao ingredientes" id="ingredientes" aria-labelledby="ingr-titulo">
+    <div class="container ingr-grade">
+      <div class="ingr-grade__foto" data-reveal>
+        {{foto_quiabo}}
+      </div>
+      <div>
+        <header class="secao__cab">
+          <p class="eyebrow">Ingredientes</p>
+          <h2 class="titulo" id="ingr-titulo">Da natureza para a <em>fibra</em>.</h2>
+          <p class="secao__intro">Os ativos de cada fórmula — e onde encontrar cada um.</p>
+        </header>
+        <ul class="ingr-lista">
+{{ingredientes}}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9. GALERIA DE RESULTADOS (UGC) -->
+  <section class="secao galeria" id="galeria" aria-labelledby="galeria-titulo">
+    <div class="container">
+      <header class="secao__cab secao__cab--linha">
+        <div>
+          <p class="eyebrow">Galeria</p>
+          <h2 class="titulo" id="galeria-titulo">O seu resultado <em>aqui</em>.</h2>
+        </div>
+        <p class="secao__intro">Esta galeria vai reunir fotos de quem usa Youse, enviadas com autorização.</p>
+      </header>
+      <ul class="ugc-grade" data-galeria>
+{{galeria}}
+        <li class="ugc ugc--convite">
+          <p class="ugc__hashtag">{{hashtag}}</p>
+          <p>Poste o seu antes e depois com a hashtag e marque <strong>{{instagram_user}}</strong> para aparecer aqui.</p>
+          <a class="btn btn--claro btn--sm" href="{{instagram}}" {{ext}}>{{i_insta}} Seguir no Instagram</a>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <div class="divisor" aria-hidden="true">{{fios_div2}}</div>
+
+  <!-- 10. SEJA DISTRIBUIDOR -->
+  <section class="secao distribuidor" id="distribuidor" aria-labelledby="dist-titulo">
+    <div class="container dist-grade">
+      <div class="dist-grade__foto" data-reveal>{{foto_linha}}</div>
+      <div class="dist-grade__texto">
+        <p class="eyebrow">Atacado</p>
+        <h2 class="titulo" id="dist-titulo">Leve a Youse para o seu <em>salão</em> ou loja.</h2>
+        <p class="secao__intro">Uma linha completa, do tratamento à manutenção, com o extrato de quiabo como ativo-assinatura. Fale com a equipe e saiba como se tornar distribuidor.</p>
+        <div class="hero__ctas">
+          <a class="btn btn--primario btn--lg" href="{{wa_distribuidor}}" {{ext}}>{{i_wa}} Quero revender</a>
+          <a class="btn btn--fantasma btn--lg" href="seja-distribuidor/">Saiba mais {{i_seta}}</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 11. ONDE COMPRAR -->
+  <section class="secao onde" id="onde-comprar" aria-labelledby="onde-titulo">
+    <div class="container">
+      <header class="secao__cab secao__cab--centro">
+        <p class="eyebrow">Onde comprar</p>
+        <h2 class="titulo" id="onde-titulo">Escolha onde <em>comprar</em>.</h2>
+        <p class="secao__intro">A Youse está em dois canais. Os botões levam direto à loja.</p>
+      </header>
+      {{lojas}}
+    </div>
+  </section>
+
+</main>
+{{footer}}
+{{scripts}}
+</body>
+</html>

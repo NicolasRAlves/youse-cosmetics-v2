@@ -1,0 +1,89 @@
+{{head}}
+<body class="pg-distribuidor">
+{{header}}
+<main id="conteudo">
+  <section class="pg-topo pg-topo--foto" aria-labelledby="dist-titulo">
+    <div class="pg-topo__fios" aria-hidden="true">{{fios}}</div>
+    <div class="container pg-topo__grade">
+      <div>
+        <nav class="trilha" aria-label="Você está em"><ol><li><a href="../">Home</a></li><li><span aria-current="page">Seja distribuidor</span></li></ol></nav>
+        <p class="eyebrow">Atacado · Salões · Lojas</p>
+        <h1 class="display display--md" id="dist-titulo">Seja <em>distribuidor</em> Youse.</h1>
+        <p class="lead">Leve para o seu salão ou loja uma linha completa de tratamento capilar, do alinhamento à finalização.</p>
+        <div class="hero__ctas">
+          <a class="btn btn--primario btn--lg" href="{{wa_distribuidor}}" {{ext}}>{{i_wa}} Falar com a equipe</a>
+          <a class="btn btn--fantasma btn--lg" href="#cadastro">Enviar meus dados {{i_seta}}</a>
+        </div>
+      </div>
+      <div class="pg-topo__foto">{{foto_linha}}</div>
+    </div>
+  </section>
+
+  <section class="secao" aria-labelledby="porque-titulo">
+    <div class="container">
+      <header class="secao__cab">
+        <p class="eyebrow">Por que revender Youse</p>
+        <h2 class="titulo" id="porque-titulo">O que você leva para a <em>prateleira</em>.</h2>
+      </header>
+      <ul class="motivos">
+        <li data-reveal>{{i_casa}}<h3>Linha completa</h3><p>12 produtos: 5 de tratamento e 7 de manutenção e finalização, com 4 kits prontos.</p></li>
+        <li data-reveal>{{i_gota}}<h3>Liso sem química agressiva</h3><p>Youliss e Quiabo alinham os fios e reduzem o frizz sem química agressiva.</p></li>
+        <li data-reveal>{{i_folha}}<h3>Ativo-assinatura</h3><p>Extrato de quiabo em Quiabo, BTX Quiabo e Hydraspecial.</p></li>
+        <li data-reveal>{{i_atomo}}<h3>Tecnologia Nano Active</h3><p>No BTX Quiabo: nutrição profunda, reposição de massa e redução do frizz.</p></li>
+        <li data-reveal>{{i_play}}<h3>Conteúdo próprio</h3><p>Vídeos de aplicação e resultado da marca para mostrar ao cliente final.</p></li>
+        <li data-reveal>{{i_loja}}<h3>Marca presente online</h3><p>Loja oficial no Mercado Livre e venda na Dot Cosméticos.</p></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="secao secao--escura" aria-labelledby="linhas-titulo">
+    <div class="container">
+      <header class="secao__cab">
+        <p class="eyebrow">Linhas disponíveis</p>
+        <h2 class="titulo" id="linhas-titulo">Do tratamento à <em>finalização</em>.</h2>
+      </header>
+      <div class="linhas-grade">{{linhas}}</div>
+    </div>
+  </section>
+
+  <section class="secao" id="cadastro" aria-labelledby="form-titulo">
+    <div class="container form-grade">
+      <header class="secao__cab">
+        <p class="eyebrow">Cadastro rápido</p>
+        <h2 class="titulo" id="form-titulo">Conte sobre o seu <em>negócio</em>.</h2>
+        <p class="secao__intro">Preencha e envie pelo WhatsApp. Os dados não ficam salvos no site: eles vão direto para a conversa com a equipe Youse.</p>
+      </header>
+      <form class="form" data-form-distribuidor novalidate>
+        <div class="campo">
+          <label for="f-nome">Seu nome</label>
+          <input id="f-nome" name="nome" type="text" autocomplete="name" required>
+        </div>
+        <div class="campo">
+          <label for="f-cidade">Cidade / UF</label>
+          <input id="f-cidade" name="cidade" type="text" autocomplete="address-level2" placeholder="Ex.: Marília / SP" required>
+        </div>
+        <div class="campo">
+          <label for="f-tipo">Tipo de negócio</label>
+          <select id="f-tipo" name="tipo" required>
+            <option value="">Selecione</option>
+            <option>Salão de beleza</option>
+            <option>Loja de cosméticos</option>
+            <option>Profissional autônomo(a)</option>
+            <option>Distribuidora</option>
+            <option>Outro</option>
+          </select>
+        </div>
+        <div class="campo campo--largo">
+          <label for="f-msg">Mensagem (opcional)</label>
+          <textarea id="f-msg" name="mensagem" rows="3" placeholder="Linhas de interesse, dúvidas…"></textarea>
+        </div>
+        <p class="form__erro" data-form-erro role="alert" hidden></p>
+        <button class="btn btn--primario btn--lg" type="submit">{{i_wa}} Enviar pelo WhatsApp</button>
+      </form>
+    </div>
+  </section>
+</main>
+{{footer}}
+{{scripts}}
+</body>
+</html>
