@@ -28,8 +28,12 @@ jpg()        { $FF -i "$1" -vf "scale=$3:-1:flags=lanczos" -q:v ${4:-4} "$2"; }
 echo "== Produtos"
 # arquivo = cor do produto (fundo da imagem de compartilhamento). Mantenha igual a data/produtos.js
 declare -A COR=( [youliss_2]=E7339A [purify]=0D69CC [quiabo]=22C55E [btx]=2DD4BF [sos]=EF4444 [hydro]=65A30D [marrom]=B99062 [salao]=FB923C [glamour]=D946EF [blend]=F59E0B [rose]=E69094 [nato_azul]=2563EB )
+# Se existir ../midia-extra/produtos/<nome>.png (foto nova, já sem fundo), ela substitui a da v1.
+# Para tirar o fundo branco de uma foto de estúdio: node scripts/remover-fundo.mjs foto.jpg ../midia-extra/produtos/<nome>.png
+PROD_EXTRA="${PROD_EXTRA:-../midia-extra/produtos}"
 for f in "$ORIGEM"/img/produtos/*.png; do
   n=$(basename "$f" .png)
+  [ -f "$PROD_EXTRA/$n.png" ] && f="$PROD_EXTRA/$n.png"
   crop=$(ffmpeg -hide_banner -i "$f" -vf "alphaextract,format=yuv420p,cropdetect=limit=20:round=2:reset=0:skip=0" -f null - 2>&1 | grep -o "crop=[0-9:]*" | tail -1)
   [ -z "$crop" ] && crop="crop=iw:ih:0:0"
   $FF -i "$f" -vf "$crop,pad='ceil(max(iw,ih)*1.1/2)*2':'ceil(max(iw,ih)*1.1/2)*2':(ow-iw)/2:(oh-ih)/2:color=black@0,scale=1200:1200:flags=lanczos" -pix_fmt rgba "$TMP/$n.png"
@@ -52,9 +56,11 @@ echo "== Antes/depois"
 # Fotos reais (3:4) ficam em ../midia-extra/antes-depois/<nome>.png|jpg — ex.: youliss-antes.png, youliss-depois.png.
 # Toda foto dessa pasta vira assets/img/antes-depois/<nome>.webp + .jpg (720×960).
 EXTRA="${EXTRA:-../midia-extra/antes-depois}"
-for f in "$EXTRA"/*.png "$EXTRA"/*.jpg "$EXTRA"/*.jpeg; do
+for f in "$EXTRA"/*.png "$EXTRA"/*.jpg "$EXTRA"/*.jpeg "$EXTRA"/*.heic "$EXTRA"/*.HEIC; do
   [ -f "$f" ] || continue
   n=$(basename "${f%.*}")
+  # HEIC do iPhone vem em blocos: converte a imagem inteira para PNG antes de redimensionar
+  case "$f" in *.heic|*.HEIC) $FF -i "$f" -frames:v 1 "$TMP/$n-orig.png"; f="$TMP/$n-orig.png";; esac
   $FF -i "$f" -vf "scale=720:960:force_original_aspect_ratio=increase,crop=720:960" "$TMP/$n.png"
   webp_rgb "$TMP/$n.png" "$A/img/antes-depois/$n.webp" 720 80; jpg "$TMP/$n.png" "$A/img/antes-depois/$n.jpg" 720 4
   echo "   $n (foto)"
@@ -69,6 +75,11 @@ poster() { $FF -ss $2 -i "$ORIGEM/video/$1" -frames:v 1 -vf "scale=540:960" "$TM
 poster video_1.mp4 28.0 poster-1
 poster video_2.mp4 30.0 poster-2
 poster video_3.mp4 16.0 poster-3
+# Vídeos extras (../midia-extra/videos/video_N.mp4|mov): poster no segundo indicado
+VID_EXTRA="${VID_EXTRA:-../midia-extra/videos}"
+posterx() { [ -f "$1" ] || return 0; $FF -ss $2 -i "$1" -frames:v 1 -vf "scale=540:960:force_original_aspect_ratio=increase,crop=540:960" "$TMP/$3.png"; webp_rgb "$TMP/$3.png" "$A/video/$3.webp" 540 75; jpg "$TMP/$3.png" "$A/video/$3.jpg" 540 5; }
+posterx "$VID_EXTRA/video_4.mp4" 19.5 poster-4
+posterx "$VID_EXTRA/video_5.mov" 3.0 poster-5
 
 echo "== Marca"
 $FF -i "$ORIGEM/img/logo.png" -vf "crop=1582:540:222:732,scale=480:-1:flags=lanczos,format=yuva420p" -c:v libwebp -quality 90 "$A/img/brand/logo.webp"
@@ -82,6 +93,13 @@ $FF -f lavfi -i "color=c=0x0A0A0A:s=1200x630" -i "$ORIGEM/img/logo.png" -i "$ORI
 echo "== Vídeos (pode demorar)"
 for n in 1 2 3; do
   $FF -i "$ORIGEM/video/video_$n.mp4" -c:v libx264 -preset veryfast -crf 28 -profile:v high -pix_fmt yuv420p -c:a aac -b:a 96k -movflags +faststart "$A/video/video_$n.mp4"
+done
+# Extras do celular (HEVC, 1080p/1440p) → H.264 720×1280, que toca em qualquer navegador
+for f in "$VID_EXTRA"/video_*.*; do
+  [ -f "$f" ] || continue
+  n=$(basename "${f%.*}")
+  $FF -i "$f" -vf "scale=720:1280:force_original_aspect_ratio=increase,crop=720:1280,fps=30" -c:v libx264 -preset veryfast -crf 28 -profile:v high -pix_fmt yuv420p -c:a aac -b:a 96k -movflags +faststart "$A/video/$n.mp4"
+  echo "   $n"
 done
 rm -rf "$TMP"
 echo "Pronto."

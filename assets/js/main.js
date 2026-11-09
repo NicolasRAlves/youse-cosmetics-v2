@@ -151,6 +151,12 @@
     });
   });
 
+  /* Links que abrem uma aba específica (ex.: antes/depois do BTX a partir do destaque) */
+  $$('[data-aba-alvo]').forEach((l) => l.addEventListener('click', () => {
+    const aba = document.getElementById(l.dataset.abaAlvo);
+    if (aba) aba.click();
+  }));
+
   /* 9. Brilho dos fios: liga só depois do carregamento e pausa fora da tela (economiza bateria e CPU). */
   const fios = $$('svg.fios');
   if (fios.length && !reduzido && 'IntersectionObserver' in window) {

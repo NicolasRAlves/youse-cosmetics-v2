@@ -20,7 +20,7 @@
         <div class="hero__fotos">
           {{hero_fotos}}
         </div>
-        <p class="hero__selo"><span>12 produtos</span><span>12 cores</span></p>
+        <a class="hero__selo" href="produtos/{{destaque_slug}}/"><span>O mais vendido</span><span>BTX Quiabo</span></a>
       </div>
     </div>
     {{faixa_cromatica}}
@@ -34,6 +34,9 @@
       <li data-reveal>{{i_casa}}<div><h2>Do salão para casa</h2><p>Linha completa, do tratamento à manutenção, para cuidar dos fios em casa.</p></div></li>
     </ul>
   </section>
+
+  <!-- DESTAQUE: produto mais vendido (BTX Quiabo) -->
+  {{destaque}}
 
   <!-- 4. RESULTADOS EM VÍDEO (Stories) -->
   <section class="secao resultados" id="resultados" aria-labelledby="resultados-titulo">
@@ -52,14 +55,15 @@
 
   <!-- 5. ANTES & DEPOIS -->
   <section class="secao antes-depois" id="antes-depois" aria-labelledby="ad-titulo">
-    <div class="container ad-grade">
-      <header class="secao__cab ad-grade__texto">
-        <p class="eyebrow">Antes &amp; depois</p>
-        <h2 class="titulo" id="ad-titulo">Arraste e veja a <em>transformação</em>.</h2>
-        <p class="secao__intro">Fotos reais de cliente e quadros dos vídeos da Youse: o mesmo cabelo, antes e depois do tratamento.</p>
-        <p class="ad-dica">Arraste a linha ou use as setas do teclado.</p>
+    <div class="container">
+      <header class="secao__cab secao__cab--linha">
+        <div>
+          <p class="eyebrow">Antes &amp; depois</p>
+          <h2 class="titulo" id="ad-titulo">Arraste e veja a <em>transformação</em>.</h2>
+        </div>
+        <p class="secao__intro">Fotos reais de clientes e quadros dos vídeos da Youse: o mesmo cabelo, antes e depois do tratamento.</p>
       </header>
-      <div class="ad-grade__comp" data-reveal>
+      <div data-reveal>
         {{antes_depois}}
       </div>
     </div>
@@ -121,9 +125,9 @@
       <header class="secao__cab secao__cab--linha">
         <div>
           <p class="eyebrow">Galeria</p>
-          <h2 class="titulo" id="galeria-titulo">O seu resultado <em>aqui</em>.</h2>
+          <h2 class="titulo" id="galeria-titulo">Quem usa, <em>mostra</em>.</h2>
         </div>
-        <p class="secao__intro">Esta galeria vai reunir fotos de quem usa Youse, enviadas com autorização.</p>
+        <p class="secao__intro">Clientes reais que usam Youse. Toque na foto para conhecer o produto.</p>
       </header>
       <ul class="ugc-grade" data-galeria>
 {{galeria}}

@@ -140,7 +140,7 @@ export function criar(Y) {
             <ul class="mega__lista">${porCat(c.id).map((p) => `
               <li><a class="mega__item" href="${b}produtos/${p.slug}/" style="${varsCor(p)}">
                 <span class="mega__thumb"><img src="${b}assets/img/produtos/${p.img}-300.webp" width="300" height="300" alt="" loading="lazy" decoding="async"></span>
-                <span><span class="mega__nome">${esc(p.nome)}</span><span class="mega__tag">${esc(p.tag)}</span></span>
+                <span><span class="mega__nome">${esc(p.nome)}${p.selo ? ` <span class="selo selo--mini">${esc(p.selo)}</span>` : ''}</span><span class="mega__tag">${esc(p.tag)}</span></span>
               </a></li>`).join('')}
             </ul>
           </div>`).join('');
@@ -244,9 +244,9 @@ export function criar(Y) {
   }
 
   function cardProduto(p, b, { nivel = 'h3', sizes = '(min-width: 1100px) 300px, (min-width: 640px) 30vw, 46vw' } = {}) {
-    return `<li class="card-p" data-cat="${p.categoria}" data-nec="${p.necessidades.join(' ')}" style="${varsCor(p)}" data-reveal>
+    return `<li class="card-p${p.destaque ? ' card-p--destaque' : ''}" data-cat="${p.categoria}" data-nec="${p.necessidades.join(' ')}" style="${varsCor(p)}" data-reveal>
   <a class="card-p__link" href="${b}produtos/${p.slug}/">
-    <span class="card-p__media">${picProduto(p, b, { sizes })}</span>
+    <span class="card-p__media">${p.selo ? `<span class="selo selo--card">${esc(p.selo)}</span>` : ''}${picProduto(p, b, { sizes })}</span>
     <span class="card-p__corpo">
       <span class="card-p__tag">${esc(p.tag)}${p.kit ? ' · Kit' : ''}</span>
       <${nivel} class="card-p__nome">${esc(p.nome)}</${nivel}>

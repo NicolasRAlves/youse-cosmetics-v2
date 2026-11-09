@@ -163,15 +163,28 @@ function placeholderAntesDepois() {
 
 function blocoAntesDepoisHome(b) {
   const pares = Y.antesDepois.filter((par) => par.home !== false);
-  const abas = pares.map((par, i) => `<button type="button" role="tab" class="aba" id="aba-${par.id}" aria-controls="painel-${par.id}" aria-selected="${i === 0}" tabindex="${i === 0 ? 0 : -1}">${esc(par.titulo)}</button>`).join('');
+  const abas = pares.map((par, i) => {
+    const p = porSlug[par.produto];
+    return `<button type="button" role="tab" class="ad-caso" id="aba-${par.id}" aria-controls="painel-${par.id}" aria-selected="${i === 0}" tabindex="${i === 0 ? 0 : -1}" style="${varsCor(p)}">
+        <span class="ad-caso__fotos" aria-hidden="true">${picFrame(par.antes, '', b)}${picFrame(par.depois, '', b)}</span>
+        <span class="ad-caso__txt"><strong>${esc(par.titulo)}</strong><small><span class="ponto"></span>${esc(p.nome)}</small></span>
+      </button>`;
+  }).join('');
   const paineis = pares.map((par, i) => {
     const p = porSlug[par.produto];
     return `<div class="ad-painel" role="tabpanel" id="painel-${par.id}" aria-labelledby="aba-${par.id}"${i ? ' hidden' : ''}>
-      ${antesDepois(par, b)}
+      ${antesDepois(par, b, { eager: i === 0 })}
       <a class="link-seta" href="${b}produtos/${p.slug}/" style="${varsCor(p)}">Conhecer o ${esc(p.nome)} ${icon('seta')}</a>
     </div>`;
   }).join('');
-  return `<div class="abas" role="tablist" aria-label="Escolha o resultado" data-abas>${abas}</div>${paineis}`;
+  return `<div class="ad-home">
+    <div class="ad-home__palco">${paineis}</div>
+    <div class="ad-home__lado">
+      <p class="ad-home__rotulo">${pares.length} resultados · escolha um</p>
+      <div class="ad-casos" role="tablist" aria-label="Escolha o resultado" data-abas>${abas}</div>
+      <p class="ad-dica">Arraste a linha sobre a foto, ou use as setas do teclado.</p>
+    </div>
+  </div>`;
 }
 
 function blocoDiagnostico(b) {
@@ -217,11 +230,19 @@ function blocoIngredientes(b) {
   </li>`).join('\n');
 }
 
-function blocoGaleria() {
-  // Grade pronta para fotos de clientes. Para publicar uma foto, troque um <li class="ugc ugc--vazio"> por:
-  // <li class="ugc" data-trat="liso"><img src="assets/img/clientes/arquivo.webp" alt="..." width="600" height="750" loading="lazy"></li>
-  const vagas = [['liso', 'Liso'], ['reconstrucao', 'Reconstrução'], ['hidratacao', 'Hidratação'], ['liso', 'Liso'], ['nutricao', 'Nutrição'], ['finalizacao', 'Finalização']];
-  return vagas.map(([id, nome]) => `<li class="ugc ugc--vazio" data-trat="${id}"><span>${icon('camera')}<strong>[FOTO DE CLIENTE]</strong><small>${nome}</small></span></li>`).join('\n');
+function blocoGaleria(b) {
+  // Fotos reais de clientes (pares de antes e depois). [CLIENTE VALIDAR] autorização de uso de imagem.
+  const ids = ['btx', 'quiabo', 'youliss', 'youliss-2'];
+  return ids.map((id) => {
+    const par = Y.antesDepois.find((x) => x.id === id); const p = porSlug[par.produto];
+    return `<li class="ugc" style="${varsCor(p)}" data-reveal>
+      <a class="ugc__link" href="${b}produtos/${p.slug}/">
+        ${picFrame(par.depois, par.altDepois, b, { classe: 'ugc__depois' })}
+        <span class="ugc__antes">${picFrame(par.antes, par.altAntes, b)}<small>Antes</small></span>
+        <span class="ugc__tag"><span class="ponto" aria-hidden="true"></span>${esc(p.nome)}</span>
+      </a>
+    </li>`;
+  }).join('\n');
 }
 
 /* ---------------- blocos da PÁGINA DE PRODUTO ---------------- */
@@ -241,10 +262,11 @@ function blocoResultadoProduto(p, b) {
   // Antes/depois primeiro (convence mais rápido no celular), vídeo depois.
   const ids = [].concat(p.antesDepois || []);
   const pares = ids.map((id) => Y.antesDepois.find((x) => x.id === id)).filter(Boolean);
-  if (pares.length) pares.forEach((par) => partes.push(`<div class="resultado__ad" data-reveal>${antesDepois(par, b)}</div>`));
-  else partes.push(`<div class="resultado__ad" data-reveal>${placeholderAntesDepois()}</div>`);
-  if (p.video) {
-    const v = Y.videos.find((x) => x.n === p.video);
+  const vids = [].concat(p.video || []).map((n) => Y.videos.find((x) => x.n === n)).filter(Boolean);
+  pares.forEach((par) => partes.push(`<div class="resultado__ad" data-reveal>${antesDepois(par, b)}</div>`));
+  // Espaço reservado só quando o produto não tem nenhuma prova visual (nem foto, nem vídeo).
+  if (!pares.length && !vids.length) partes.push(`<div class="resultado__ad" data-reveal>${placeholderAntesDepois()}</div>`);
+  for (const v of vids) {
     partes.push(`<figure class="video-produto" data-reveal>
       <video controls playsinline preload="none" poster="${b}assets/video/${v.poster}.jpg" width="720" height="1280" aria-label="Vídeo: ${esc(v.titulo)} — ${esc(v.legenda)}">
         <source src="${b}assets/video/${v.arquivo}" type="video/mp4">
@@ -254,6 +276,55 @@ function blocoResultadoProduto(p, b) {
     </figure>`);
   }
   return partes.join('\n    ');
+}
+
+/* Ordem das vitrines: produtos em destaque primeiro, depois a ordem do catálogo. */
+const vitrine = () => [...produtos].sort((a, c) => (c.destaque ? 1 : 0) - (a.destaque ? 1 : 0) || a.ordem - c.ordem);
+
+/* Destaque da home: o produto mais vendido (BTX Quiabo) + outros produtos com selo. */
+function blocoDestaque(b) {
+  const p = produtos.find((x) => x.destaque);
+  if (!p) return '';
+  const par = Y.antesDepois.find((x) => x.id === [].concat(p.antesDepois || [])[0]);
+  const passoPausa = p.passos.find((s) => s.timer);
+  const outros = produtos.filter((x) => x.selo && !x.destaque);
+  const mini = par ? `<a class="destaque__prova" href="#antes-depois" data-aba-alvo="aba-${par.id}">
+          <span class="destaque__mini">${picFrame(par.antes, par.altAntes, b)}<span>Antes</span></span>
+          <span class="destaque__mini">${picFrame(par.depois, par.altDepois, b)}<span>Depois</span></span>
+          <span class="destaque__prova-txt">Resultado real de cliente ${icon('seta')}</span>
+        </a>` : '';
+  return `<section class="destaque" id="destaque" aria-labelledby="destaque-titulo" style="${varsCor(p)}">
+    <div class="destaque__fios" aria-hidden="true">${fios({ id: 'fdq', n: 12, h: 520, seed: 77, centro: 0.5 })}</div>
+    <div class="container destaque__grade">
+      <div class="destaque__media" data-parallax="0.04">
+        <span class="destaque__disco" aria-hidden="true"></span>
+        ${picProduto(p, b, { sizes: '(min-width: 900px) 42vw, 86vw', classe: 'destaque__foto' })}
+        <span class="destaque__carimbo" aria-hidden="true"><span>Mais<br>vendido</span></span>
+      </div>
+      <div class="destaque__texto">
+        <p class="eyebrow">O ${esc(p.selo.toLowerCase())} da Youse</p>
+        <h2 class="display display--md" id="destaque-titulo">${esc(p.nome.replace(/ Quiabo$/, ''))} <em>Quiabo</em></h2>
+        <p class="destaque__sub">${esc(p.tag)} · ${esc(p.subtitulo)}</p>
+        <p class="destaque__desc">${esc(p.descricao)}</p>
+        <ul class="destaque__beneficios">${p.beneficios.map((x) => `<li>${icon('check')}${esc(x)}</li>`).join('')}</ul>
+        ${passoPausa ? `<p class="destaque__tempo">${icon('relogio')} ${esc(passoPausa.tempo)} de pausa · finalização com chapinha</p>` : ''}
+        <div class="destaque__ctas">
+          <a class="btn btn--escuro btn--lg" href="${site.lojas[0].url}" ${EXT}>${icon('sacola')} Comprar no Mercado Livre</a>
+          <a class="btn btn--contorno-tinta btn--lg" href="${site.lojas[1].url}" ${EXT}>Comprar na Dot ${icon('externo')}</a>
+        </div>
+        <a class="destaque__link" href="${b}produtos/${p.slug}/">Ver passo a passo e resultados ${icon('seta')}</a>
+        ${mini}
+      </div>
+    </div>
+    ${outros.length ? `<div class="container destaque__outros">
+      <p class="destaque__outros-titulo">Também em destaque</p>
+      <ul>${outros.map((o) => `<li style="${varsCor(o)}"><a href="${b}produtos/${o.slug}/">
+        <span class="destaque__outros-img">${picProduto(o, b, { sizes: '96px' })}</span>
+        <span><span class="selo">${esc(o.selo)}</span><strong>${esc(o.nome)}</strong><small>${esc(o.resumo)}</small></span>
+        ${icon('seta')}
+      </a></li>`).join('')}</ul>
+    </div>` : ''}
+  </section>`;
 }
 
 function blocoFaq(p) {
@@ -273,7 +344,7 @@ async function gerarHome() {
       titulo: 'Youse Cosmetics · A jornada da sua transformação capilar',
       descricao: 'Tratamentos capilares com tecnologia e ingredientes naturais: efeito liso sem química agressiva, extrato de quiabo e Nano Active. Faça o diagnóstico e encontre o seu ritual.',
       canonico: '',
-      preload: `<link rel="preload" as="image" type="image/webp" imagesrcset="assets/img/home/youliss-lancamento-600.webp 600w, assets/img/home/youliss-lancamento-1200.webp 1200w" imagesizes="(min-width: 900px) 40vw, 80vw">\n`,
+      preload: `<link rel="preload" as="image" type="image/webp" imagesrcset="assets/img/home/btx-quiabo-600.webp 600w, assets/img/home/btx-quiabo-1200.webp 1200w" imagesizes="(min-width: 900px) 40vw, 80vw">\n`,
       extra: jsonld(orgLd) + jsonld({ '@context': 'https://schema.org', '@type': 'WebSite', name: 'Youse Cosmetics', url: site.url + '/', inLanguage: 'pt-BR' })
     }),
     header: C.cabecalho(b),
@@ -282,17 +353,19 @@ async function gerarHome() {
     fios_hero: fios({ id: 'fh', n: 16, h: 520, seed: 11, centro: 0.55 }),
     fios_div: fios({ id: 'fd', n: 7, w: 1440, h: 120, seed: 3, aperto: 0.18, classe: 'fios--divisor' }),
     fios_div2: fios({ id: 'fd2', n: 7, w: 1440, h: 120, seed: 19, aperto: 0.18, classe: 'fios--divisor' }),
-    hero_fotos: ['youliss-lancamento', 'quiabo-natural', 'btx-quiabo'].map((n, i) => picFoto(n, b, { sizes: '(min-width: 900px) 40vw, 80vw', eager: i === 0, classe: `hero__foto hero__foto--${i + 1}` })).join('\n          '),
+    hero_fotos: ['btx-quiabo', 'youliss-lancamento', 'quiabo-natural'].map((n, i) => picFoto(n, b, { sizes: '(min-width: 900px) 40vw, 80vw', eager: i === 0, classe: `hero__foto hero__foto--${i + 1}` })).join('\n          '),
     faixa_cromatica: blocoFaixaCromatica(b),
+    destaque: blocoDestaque(b),
+    destaque_slug: produtos.find((x) => x.destaque).slug,
     stories: blocoStories(b),
     player: playerStories(b),
     antes_depois: blocoAntesDepoisHome(b),
     diagnostico: blocoDiagnostico(b),
     filtros: C.filtros('colecao'),
-    colecao: produtos.map((p) => C.cardProduto(p, b)).join('\n'),
+    colecao: vitrine().map((p) => C.cardProduto(p, b)).join('\n'),
     foto_quiabo: picFoto('quiabo-natural', b, { sizes: '(min-width: 900px) 34vw, 90vw' }),
     ingredientes: blocoIngredientes(b),
-    galeria: blocoGaleria(),
+    galeria: blocoGaleria(b),
     hashtag: esc(site.hashtag),
     instagram: site.redes.instagram,
     instagram_user: site.instagramUser,
@@ -343,6 +416,7 @@ async function gerarProduto(p, modelo) {
     nome: esc(p.nome),
     nome_completo: esc(p.nomeCompleto),
     tag: esc(p.tag),
+    selo: p.selo ? `<span class="p-hero__selo">${esc(p.selo)}</span>` : '',
     subtitulo: esc(p.subtitulo),
     resumo: esc(p.resumo),
     descricao: esc(p.descricao),
@@ -377,7 +451,7 @@ async function gerarCatalogo() {
     header: C.cabecalho(b), footer: C.rodape(b), scripts: scripts(b, []),
     fios: fios({ id: 'fc', n: 12, h: 360, seed: 23, centro: 0.6 }),
     filtros: C.filtros('catalogo'),
-    produtos: produtos.map((p) => C.cardProduto(p, b, { nivel: 'h2' })).join('\n'),
+    produtos: vitrine().map((p) => C.cardProduto(p, b, { nivel: 'h2' })).join('\n'),
     i_seta: icon('seta')
   };
   await salvar('produtos/index.html', render(await tpl('catalogo.html'), v, 'catalogo.html'));

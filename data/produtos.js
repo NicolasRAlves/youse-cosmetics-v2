@@ -143,6 +143,7 @@
         { titulo: 'Tempo de ação', texto: 'Deixe o produto agir nos fios por 40 minutos para garantir a absorção completa dos nutrientes.', tempo: '40 min', timer: [40] },
         { titulo: 'Enxágue e finalização', texto: 'Retire o excesso no lavatório (cerca de 10%). Escove e seque totalmente. Para um melhor resultado de maciez e brilho intenso, recomenda-se o uso de prancha.', tempo: 'Prancha' }
       ],
+      antesDepois: ['quiabo'],
       ritual: ['purify', 'quiabo', 'oil-blend-argan'],
       faq: [
         { p: 'Quanto tempo de pausa?', r: '40 minutos, para garantir a absorção completa dos nutrientes.' },
@@ -154,6 +155,7 @@
     },
     {
       slug: 'youliss',
+      selo: 'Lançamento',
       nome: 'Youliss',
       nomeCompleto: 'Youliss Reestruturante Premium',
       tag: 'Liso Absoluto',
@@ -191,6 +193,9 @@
     },
     {
       slug: 'btx-quiabo',
+      // Pedido da Youse (04/11/2026): o produto com mais saída, em destaque no site
+      destaque: true,
+      selo: 'Mais vendido',
       nome: 'BTX Quiabo',
       nomeCompleto: 'BTX Quiabo Tratamento Capilar',
       tag: 'Nano Tecnologia',
@@ -213,6 +218,7 @@
         { titulo: 'Aplicação e pausa', texto: 'Aplique o BTX mecha a mecha, enluvando bem. Deixe agir de 20 a 40 minutos, dependendo da resistência do fio.', tempo: '20–40 min', timer: [20, 30, 40] },
         { titulo: 'Selagem dos fios', texto: 'Enxágue parcialmente (deixando um pouco de produto). Finalize com secador e chapinha para ativar o tratamento térmico e selar os nutrientes.', tempo: 'Chapinha' }
       ],
+      antesDepois: ['btx'],
       ritual: ['purify', 'btx-quiabo', 'oil-blend-argan'],
       faq: [
         { p: 'Quanto tempo de pausa?', r: 'De 20 a 40 minutos, dependendo da resistência do fio.' },
@@ -248,7 +254,7 @@
         { titulo: 'Ação reparadora', texto: 'Deixe agir de 5 a 10 minutos. Esse tempo é crucial para que o complexo de vitaminas recupere a elasticidade do fio.', tempo: '5–10 min', timer: [5, 10] },
         { titulo: 'Finalização', texto: 'Enxágue abundantemente. Para manter a saúde dos fios, utilize semanalmente como parte do seu cronograma capilar de reconstrução.', tempo: 'Semanal' }
       ],
-      video: 2,
+      video: [4, 2, 5],
       ritual: ['purify', 'sos', 'natocream'],
       faq: [
         { p: 'Quanto tempo de pausa?', r: 'De 5 a 10 minutos, tempo para o complexo de vitaminas recuperar a elasticidade do fio.' },
@@ -519,6 +525,8 @@
     { n: 1, arquivo: 'video_1.mp4', poster: 'poster-1', titulo: 'Liso Espelhado', legenda: 'Resultado com Youliss', produto: 'youliss', duracao: 36 },
     { n: 2, arquivo: 'video_2.mp4', poster: 'poster-2', titulo: 'Hidratação SOS', legenda: 'Recuperação total', produto: 'sos', duracao: 35 },
     // [CLIENTE VALIDAR] o vídeo 3 mostra a máscara SOS aplicada no salão; o botão leva ao Pós Salão
+    { n: 4, arquivo: 'video_4.mp4', poster: 'poster-4', titulo: 'SOS no Salão', legenda: 'Da aplicação ao liso', produto: 'sos', duracao: 22 },
+    { n: 5, arquivo: 'video_5.mp4', poster: 'poster-5', titulo: 'Brilho com SOS', legenda: 'Fios com movimento', produto: 'sos', duracao: 40 },
     { n: 3, arquivo: 'video_3.mp4', poster: 'poster-3', titulo: 'Salão em Casa', legenda: 'Linha Pós-Salão', produto: 'pos-salao', duracao: 23 }
   ];
 
@@ -527,6 +535,8 @@
    * salao: quadros do início e do fim do vídeo "Salão em Casa".
    * home: false → o par aparece só na página do produto. */
   const antesDepois = [
+    { id: 'btx', titulo: 'BTX Quiabo', antes: 'btx-antes', depois: 'btx-depois', produto: 'btx-quiabo', fonte: 'Fotos reais de cliente, antes e depois do BTX Quiabo', altAntes: 'Cabelo escuro e longo, de costas, antes do BTX Quiabo: volumoso, com frizz e pontas desalinhadas, ao lado do pote BTX Quiabo', altDepois: 'O mesmo cabelo depois do BTX Quiabo: liso, alinhado e brilhante, com o pote BTX Quiabo ao lado' },
+    { id: 'quiabo', titulo: 'Quiabo', antes: 'quiabo-antes', depois: 'quiabo-depois', produto: 'quiabo', fonte: 'Fotos reais de cliente, antes e depois do Quiabo', altAntes: 'Cabelo longo, de costas, antes do Quiabo', altDepois: 'Cabelo loiro, de costas, depois do Quiabo: liso e com brilho, com o frasco Quiabo ao lado' },
     { id: 'youliss', titulo: 'Liso com Youliss', antes: 'youliss-antes', depois: 'youliss-depois', produto: 'youliss', fonte: 'Fotos reais de cliente, antes e depois do Youliss', altAntes: 'Cabelo castanho escuro, de costas, antes do Youliss: fios armados, com frizz e pontas desalinhadas', altDepois: 'O mesmo cabelo, de costas, depois do Youliss: liso, alinhado e com brilho espelhado, ao lado do frasco Youliss' },
     { id: 'youliss-2', titulo: 'Youliss · outro ângulo', antes: 'youliss-2-antes', depois: 'youliss-2-depois', produto: 'youliss', home: false, fonte: 'Fotos reais de cliente, antes e depois do Youliss', altAntes: 'Mão levantando uma mecha de cabelo escuro antes do Youliss, mostrando frizz e fios rebeldes na raiz', altDepois: 'Cabelo escuro, de costas, depois do Youliss: liso e brilhante até as pontas, com o frasco Youliss ao lado' },
     { id: 'salao', titulo: 'Do ondulado ao liso', antes: 'salao-antes', depois: 'salao-depois', produto: 'pos-salao', fonte: 'Quadros do vídeo “Salão em Casa”', altAntes: 'Cabelo loiro, de costas, antes: ondulado, com frizz e pontas secas', altDepois: 'O mesmo cabelo loiro, de costas, depois: liso, alinhado e com brilho' }

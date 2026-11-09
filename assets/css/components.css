@@ -421,3 +421,36 @@ body.com-barra .timer { bottom: 84px; }
   .filtros__grupo::-webkit-scrollbar { display: none; }
   .chip { flex: none; }
 }
+
+/* ---------- Selos (Mais vendido, Lançamento) ---------- */
+.selo {
+  display: inline-flex; align-items: center; min-height: 24px; padding: 0 10px; border-radius: 999px;
+  font-size: .68rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+  background: var(--limao); color: #0A0A0A; white-space: nowrap;
+}
+.selo--card { position: absolute; top: 14px; left: 14px; z-index: 2; box-shadow: 0 6px 16px -6px rgba(0, 0, 0, .6); }
+.selo--mini { min-height: 18px; padding: 0 7px; font-size: .58rem; vertical-align: middle; margin-left: 4px; }
+.card-p__media { position: relative; }
+
+/* Card em destaque na vitrine: ocupa 2 colunas no desktop */
+@media (min-width: 1081px) {
+  .card-p--destaque { grid-column: span 2; }
+  .card-p--destaque .card-p__link { flex-direction: row; align-items: stretch; }
+  .card-p--destaque .card-p__media { flex: 0 0 52%; aspect-ratio: auto; padding: 8% 4% 6%; }
+  .card-p--destaque .card-p__corpo { justify-content: center; padding: 28px 28px 28px 8px; }
+  .card-p--destaque .card-p__nome { font-size: 2.4rem; }
+  .card-p--destaque .card-p__resumo { font-size: 1rem; }
+}
+
+/* Stories: 5 vídeos */
+.stories-grade { grid-template-columns: repeat(5, 1fr); gap: 14px; }
+.story-card__titulo { font-size: clamp(1.25rem, 1.8vw, 1.6rem); }
+@media (max-width: 1080px) {
+  .stories-grade { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: minmax(220px, 30%); overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 8px; margin-inline: calc(var(--gutter) * -1); padding-inline: var(--gutter); scrollbar-width: none; }
+  .stories-grade > li { scroll-snap-align: start; }
+}
+@media (max-width: 700px) { .stories-grade { grid-auto-columns: 68%; } }
+@media (min-width: 1081px) {
+  .card-p--destaque .card-p__media { align-self: center; }
+  .card-p--destaque .card-p__cta { margin-top: 18px; }
+}
