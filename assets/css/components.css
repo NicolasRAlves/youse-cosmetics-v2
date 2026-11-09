@@ -454,3 +454,20 @@ body.com-barra .timer { bottom: 84px; }
   .card-p--destaque .card-p__media { align-self: center; }
   .card-p--destaque .card-p__cta { margin-top: 18px; }
 }
+
+/* Diagnóstico: deixa claro que é para tocar */
+.diag__passo { display: inline-block; margin: 0 10px 8px 0; padding: 4px 10px; border-radius: 999px; font-size: .7rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; background: var(--limao, #BADE01); color: #0A0A0A; vertical-align: middle; }
+.diag__toque { display: flex; align-items: center; gap: 8px; margin-top: 10px; font-size: .85rem; font-weight: 600; color: var(--magenta-claro); }
+.diag__toque .i { width: 16px; height: 16px; transform: rotate(90deg); animation: diag-seta 1.4s ease-in-out infinite; }
+@keyframes diag-seta { 50% { transform: rotate(90deg) translateX(4px); } }
+.diag:has(input:checked) .diag__toque { display: none; }
+.diag__opcao-txt { flex: 1; min-width: 0; }
+.diag__radio { flex: none; width: 26px; height: 26px; border-radius: 50%; border: 2px solid var(--linha-forte); display: grid; place-items: center; color: transparent; transition: background .2s, border-color .2s, color .2s; }
+.diag__radio .i { width: 14px; height: 14px; }
+.diag__opcao:hover .diag__radio { border-color: var(--magenta-claro); }
+.diag__opcao input:checked + .diag__opcao-in .diag__radio { background: var(--magenta); border-color: var(--magenta); color: #fff; }
+.diag:not(:has(input:checked)) .diag__opcao:first-of-type .diag__opcao-in { animation: diag-pulso 2.2s ease-in-out 3; }
+@keyframes diag-pulso { 50% { border-color: var(--magenta-claro); box-shadow: 0 0 0 4px rgba(231, 51, 154, .15); } }
+.diag__vazio .diag__passo { margin: 0; }
+@media (max-width: 900px) { .diag__vazio { min-height: 0; } .diag__resultados { min-height: 0; } .diag__res { scroll-margin-top: 90px; } }
+@media (prefers-reduced-motion: reduce) { .diag__toque .i, .diag .diag__opcao-in { animation: none !important; } }

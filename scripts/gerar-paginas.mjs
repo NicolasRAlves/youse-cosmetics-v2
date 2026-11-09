@@ -191,7 +191,7 @@ function blocoDiagnostico(b) {
   const opcoes = Y.diagnostico.map((d, i) => `
       <label class="diag__opcao">
         <input type="radio" name="queixa" value="${d.id}" id="q-${d.id}">
-        <span class="diag__opcao-in"><span class="diag__n">${String(i + 1).padStart(2, '0')}</span><span><strong>${esc(d.queixa)}</strong><small>${esc(d.detalhe)}</small></span></span>
+        <span class="diag__opcao-in"><span class="diag__n">${String(i + 1).padStart(2, '0')}</span><span class="diag__opcao-txt"><strong>${esc(d.queixa)}</strong><small>${esc(d.detalhe)}</small></span><span class="diag__radio" aria-hidden="true">${icon('check')}</span></span>
       </label>`).join('');
   const resultados = Y.diagnostico.map((d) => {
     const nomes = d.ritual.map((s) => porSlug[s].nome);
@@ -211,11 +211,12 @@ function blocoDiagnostico(b) {
   }).join('');
   return `<div class="diag" data-diag>
     <fieldset class="diag__perguntas">
-      <legend>Qual é a principal queixa do seu cabelo hoje?</legend>${opcoes}
+      <legend><span class="diag__passo">Passo 1</span>Qual é a principal queixa do seu cabelo hoje?<span class="diag__toque">${icon('seta')} Toque em uma opção</span></legend>${opcoes}
     </fieldset>
     <div class="diag__resultados" aria-live="polite">
       <div class="diag__vazio">
         <p class="diag__vazio-num" aria-hidden="true">3</p>
+        <p class="diag__passo">Passo 2</p>
         <p>Escolha uma opção e montamos um ritual de <strong>3 passos</strong> com os produtos Youse certos para o seu fio.</p>
       </div>${resultados}
     </div>

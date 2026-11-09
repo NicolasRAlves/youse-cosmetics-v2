@@ -70,6 +70,8 @@
       $('[data-gaveta-fechar]', gaveta).focus();
     });
     $('[data-gaveta-fechar]', gaveta).addEventListener('click', fechar);
+    const fundo = $('[data-gaveta-fechar-fundo]', gaveta);
+    if (fundo) fundo.addEventListener('click', fechar);
     $$('a', gaveta).forEach((a) => a.addEventListener('click', () => { if (!gaveta.hidden) fechar(); }));
     gaveta.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') { fechar(); return; }
@@ -150,6 +152,14 @@
       });
     });
   });
+
+  /* Diagnóstico: no celular, rola até o ritual escolhido */
+  $$('[data-diag] input[name="queixa"]').forEach((r) => r.addEventListener('change', () => {
+    const res = document.querySelector('[data-res="' + r.value + '"]');
+    if (res && window.matchMedia('(max-width: 900px)').matches) {
+      res.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
+    }
+  }));
 
   /* Links que abrem uma aba específica (ex.: antes/depois do BTX a partir do destaque) */
   $$('[data-aba-alvo]').forEach((l) => l.addEventListener('click', () => {

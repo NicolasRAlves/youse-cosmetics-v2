@@ -145,11 +145,19 @@ export function criar(Y) {
             </ul>
           </div>`).join('');
 
-    const gaveta = categorias.map((c) => `
-        <details class="gaveta__grupo">
-          <summary>${esc(c.nome)} ${icon('chevron')}</summary>
-          <ul>${porCat(c.id).map((p) => `<li><a href="${b}produtos/${p.slug}/" style="${varsCor(p)}"><span class="ponto" aria-hidden="true"></span>${esc(p.nome)}</a></li>`).join('')}</ul>
-        </details>`).join('');
+    const destaque = produtos.find((p) => p.destaque);
+    const thumb = (p) => `<img src="${b}assets/img/produtos/${p.img}-300.webp" width="300" height="300" alt="" loading="lazy" decoding="async">`;
+    const gaveta = categorias.map((c, i) => `
+        <div class="gv-prod" role="tabpanel" id="gv-${c.id}" aria-labelledby="gv-aba-${c.id}"${i ? ' hidden' : ''}>
+          <ul>${porCat(c.id).map((p) => `<li><a href="${b}produtos/${p.slug}/" style="${varsCor(p)}"><span class="gv-prod__img">${thumb(p)}</span><span class="gv-prod__nome">${esc(p.nome)}</span><small>${esc(p.tag)}</small></a></li>`).join('')}</ul>
+        </div>`).join('');
+    const gavetaAbas = categorias.map((c, i) => `<button type="button" role="tab" class="gv-aba" id="gv-aba-${c.id}" aria-controls="gv-${c.id}" aria-selected="${i === 0}" tabindex="${i ? -1 : 0}">${esc(c.nome.split(' &')[0])}</button>`).join('');
+    const atalhos = [
+      ['atomo', 'Diagnóstico', 'Descubra seu ritual', `${b || './'}#diagnostico`],
+      ['camera', 'Resultados', 'Antes e depois', `${b || './'}#resultados`],
+      ['sacola', 'Onde comprar', 'Lojas oficiais', `${b}onde-comprar/`],
+      ['loja', 'Atacado', 'Para salões e lojas', `${b}seja-distribuidor/`]
+    ].map(([ic, t, d, h]) => `<a class="gv-atalho" href="${h}"><span class="gv-atalho__ic">${icon(ic)}</span><strong>${t}</strong><small>${d}</small></a>`).join('');
 
     return `<a class="pular" href="#conteudo">Pular para o conteúdo</a>
 <header class="topo" data-topo>
@@ -182,19 +190,38 @@ export function criar(Y) {
   </div>
 </header>
 <div class="gaveta" id="gaveta" hidden data-gaveta role="dialog" aria-modal="true" aria-label="Menu">
-  <div class="gaveta__topo">
-    <span class="gaveta__marca">Menu</span>
-    <button class="gaveta__fechar" type="button" aria-label="Fechar menu" data-gaveta-fechar>${icon('fechar')}</button>
+  <div class="gaveta__fundo" data-gaveta-fechar-fundo></div>
+  <div class="gaveta__painel">
+    <div class="gaveta__topo">
+      <picture class="gaveta__logo"><source type="image/webp" srcset="${b}assets/img/brand/logo.webp"><img src="${b}assets/img/brand/logo.png" width="480" height="164" alt="Youse Cosmetics"></picture>
+      <button class="gaveta__fechar" type="button" aria-label="Fechar menu" data-gaveta-fechar>${icon('fechar')}</button>
+    </div>
+    <div class="gaveta__corpo">
+      ${destaque ? `<a class="gv-destaque" href="${b}produtos/${destaque.slug}/" style="${varsCor(destaque)}">
+        <span class="gv-destaque__txt"><span class="selo selo--mini">${esc(destaque.selo)}</span><strong>${esc(destaque.nome)}</strong><small>${esc(destaque.resumo.split(':')[0])}</small><span class="gv-destaque__cta">Ver produto ${icon('seta')}</span></span>
+        <span class="gv-destaque__img">${thumb(destaque)}</span>
+      </a>` : ''}
+      <nav aria-label="Menu móvel">
+        <div class="gv-sec">
+          <div class="gv-sec__cab"><p class="gv-rotulo">Produtos</p><a class="gv-todos" href="${b}produtos/">Ver todos ${icon('seta')}</a></div>
+          <div class="gv-abas" role="tablist" aria-label="Linhas" data-abas>${gavetaAbas}</div>${gaveta}
+        </div>
+        <div class="gv-sec">
+          <p class="gv-rotulo">Explore</p>
+          <div class="gv-atalhos">${atalhos}</div>
+        </div>
+      </nav>
+    </div>
+    <div class="gaveta__rodape">
+      <a class="btn btn--primario btn--bloco" href="${whats.distribuidor()}" ${EXT}>${icon('whatsapp')} Seja distribuidor</a>
+      <div class="gv-redes">
+        <a href="#contato" class="gv-contato">${icon('email')} Contato</a>
+        <a href="${site.redes.instagram}" ${EXT} aria-label="Instagram">${icon('instagram')}</a>
+        <a href="${site.redes.tiktok}" ${EXT} aria-label="TikTok">${icon('tiktok')}</a>
+        <a href="${site.redes.facebook}" ${EXT} aria-label="Facebook">${icon('facebook')}</a>
+      </div>
+    </div>
   </div>
-  <nav class="gaveta__nav" aria-label="Menu móvel">
-    <a href="${b}produtos/">Todos os produtos</a>${gaveta}
-    <a href="${b || './'}#diagnostico">Diagnóstico capilar</a>
-    <a href="${b || './'}#resultados">Resultados</a>
-    <a href="${b}onde-comprar/">Onde comprar</a>
-    <a href="${b}seja-distribuidor/">Atacado e distribuidores</a>
-    <a href="#contato">Contato</a>
-  </nav>
-  <a class="btn btn--primario btn--bloco" href="${whats.distribuidor()}" ${EXT}>Seja distribuidor ${icon('whatsapp')}</a>
 </div>`;
   }
 
