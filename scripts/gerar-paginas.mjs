@@ -23,6 +23,7 @@ vm.createContext(ctx);
 vm.runInContext(await readFile(path.join(RAIZ, 'data/produtos.js'), 'utf8'), ctx, { filename: 'data/produtos.js' });
 const Y = ctx.YOUSE;
 const { site, whats, produtos, porSlug, categorias } = Y;
+const loja = (id) => site.lojas.find((l) => l.id === id);
 const C = criar(Y);
 
 /* ---------------- utilidades ---------------- */
@@ -203,7 +204,7 @@ function blocoDiagnostico(b) {
       <p class="diag__tempo">${icon('relogio')} ${esc(d.tempo)}</p>
       <div class="diag__acoes">
         <p class="diag__acoes-titulo">Comprar meu ritual</p>
-        ${site.lojas.map((l) => `<a class="btn btn--primario" href="${l.url}" ${EXT}>${esc(l.cta)} ${icon('externo')}</a>`).join('\n        ')}
+        ${site.lojas.filter((l) => l.url).map((l) => `<a class="btn btn--primario" href="${l.url}" ${EXT}>${esc(l.cta)} ${icon('externo')}</a>`).join('\n        ')}
         <a class="btn btn--fantasma" href="${whats.ritual(nomes)}" ${EXT}>${icon('whatsapp')} Enviar meu ritual no WhatsApp</a>
       </div>
       <p class="diag__aviso">Esta é uma sugestão com base na queixa principal, não um diagnóstico profissional. Ficou com dúvida? <a href="${whats.ritual(nomes)}" ${EXT}>Fale com a Youse no WhatsApp</a>.</p>
@@ -310,8 +311,9 @@ function blocoDestaque(b) {
         <ul class="destaque__beneficios">${p.beneficios.map((x) => `<li>${icon('check')}${esc(x)}</li>`).join('')}</ul>
         ${passoPausa ? `<p class="destaque__tempo">${icon('relogio')} ${esc(passoPausa.tempo)} de pausa · finalização com chapinha</p>` : ''}
         <div class="destaque__ctas">
-          <a class="btn btn--escuro btn--lg" href="${site.lojas[0].url}" ${EXT}>${icon('sacola')} Comprar no Mercado Livre</a>
-          <a class="btn btn--contorno-tinta btn--lg" href="${site.lojas[1].url}" ${EXT}>Comprar na Dot ${icon('externo')}</a>
+          <a class="btn btn--escuro btn--lg" href="${loja('ml').url}" ${EXT}>${icon('sacola')} Comprar no Mercado Livre</a>
+          <a class="btn btn--contorno-tinta btn--lg" href="${loja('shopee').url}" ${EXT}>Comprar na Shopee ${icon('externo')}</a>
+          <a class="btn btn--contorno-tinta btn--lg" href="${loja('dot').url}" ${EXT}>Comprar na Dot ${icon('externo')}</a>
         </div>
         <a class="destaque__link" href="${b}produtos/${p.slug}/">Ver passo a passo e resultados ${icon('seta')}</a>
         ${mini}
@@ -431,7 +433,7 @@ async function gerarProduto(p, modelo) {
     resultado: blocoResultadoProduto(p, b),
     ritual: C.ritual(p.ritual, b, { atual: p.slug }),
     faq: blocoFaq(p),
-    ml: site.lojas[0].url, dot: site.lojas[1].url,
+    ml: loja('ml').url, dot: loja('dot').url, shopee: loja('shopee').url,
     wa_produto: whats.produto(p.nome), wa_distribuidor: whats.distribuidor(),
     ant_url: `${b}produtos/${ant.slug}/`, ant_nome: esc(ant.nome), ant_cor: varsCor(ant),
     prox_url: `${b}produtos/${prox.slug}/`, prox_nome: esc(prox.nome), prox_cor: varsCor(prox),

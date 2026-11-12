@@ -34,6 +34,14 @@
     hashtag: '#MeuResultadoYouse',
     lojas: [
       {
+        id: 'shopee',
+        nome: 'Shopee',
+        rotulo: 'Loja oficial',
+        texto: 'A loja oficial da Youse Cosmetics na Shopee.',
+        url: 'https://shopee.com.br/search?keyword=youse%20cosmetics', // [PREENCHER: trocar pelo link exato da loja oficial na Shopee. Por enquanto leva à busca por Youse Cosmetics]
+        cta: 'Comprar na Shopee'
+      },
+      {
         id: 'ml',
         nome: 'Mercado Livre',
         rotulo: 'Loja oficial',
@@ -417,6 +425,39 @@
         { p: 'Por que usar o Purify antes dos alinhadores?', r: 'Ele é o passo 1 dos rituais de alinhamento: remove impurezas, oleosidade e resíduos e prepara a fibra para receber o tratamento.' },
         { p: 'Preciso repetir a lavagem?', r: 'Se os cabelos estiverem muito oleosos ou com muitos resíduos, repita a aplicação para abertura total das cutículas.' },
         { p: 'Onde aplico?', r: 'Diretamente no couro cabeludo, com os cabelos molhados, massageando com a ponta dos dedos.' }
+      ]
+    },
+    {
+      slug: 'bomba-de-vitaminas',
+      selo: 'Novo',
+      nome: 'Bomba de Vitaminas',
+      nomeCompleto: 'Shampoo Bomba de Vitaminas',
+      tag: 'Vitaminas & Nutrição',
+      subtitulo: 'Shampoo 1 L',
+      categoria: 'manutencao',
+      necessidades: ['nutricao', 'hidratacao'],
+      cor: '#1E40AF',
+      img: 'bomba',
+      alt: 'Shampoo Bomba de Vitaminas da Youse Cosmetics, 1 litro, e condicionador da mesma linha, com frascos azuis e rótulo laranja',
+      resumo: 'Shampoo com D-Pantenol, vitaminas A e E e proteínas vegetais: limpeza suave e fios macios, hidratados e resistentes.',
+      descricao: 'Shampoo da linha Bomba de Vitaminas, com D-Pantenol, vitamina A, vitamina E e proteínas vegetais. Faz uma limpeza suave e entrega nutrição profunda, brilho intenso e fios macios, hidratados e resistentes. Indicado para todos os tipos de cabelo e sem parabenos ou petrolatos.',
+      papel: 'Limpeza suave e nutrição profunda',
+      beneficios: ['Limpeza suave', 'Nutrição profunda', 'Brilho intenso', 'Fios macios, hidratados e resistentes'],
+      // [CLIENTE VALIDAR] função atribuída a cada ativo a partir do rótulo
+      ativos: [
+        { nome: 'D-Pantenol', funcao: 'Ajuda a fortalecer e hidratar a fibra capilar.' },
+        { nome: 'Vitaminas A e E', funcao: 'Nutrem os fios e dão brilho.' },
+        { nome: 'Proteínas vegetais', funcao: 'Ajudam a deixar os fios macios e resistentes.' }
+      ],
+      // [CLIENTE VALIDAR] modo de uso: o rótulo não traz instruções, estes passos são uma sugestão
+      passos: [
+        { titulo: 'Aplicação', texto: 'Com os cabelos molhados, aplique o Shampoo Bomba de Vitaminas e massageie suavemente o couro cabeludo.' },
+        { titulo: 'Enxágue', texto: 'Enxágue bem e, se quiser, siga com o condicionador da mesma linha.' }
+      ],
+      ritual: ['purify', 'btx-quiabo', 'oil-blend-argan'],
+      faq: [
+        { p: 'Para qual tipo de cabelo serve?', r: 'Para todos os tipos de cabelo.' },
+        { p: 'Tem parabenos ou petrolatos?', r: 'Não. A fórmula é 0% parabenos e 0% petrolatos.' }
       ]
     },
     {

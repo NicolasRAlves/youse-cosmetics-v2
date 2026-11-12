@@ -294,7 +294,7 @@ export function criar(Y) {
   }
 
   function lojas(b, { titulo = 'h3' } = {}) {
-    return `<ul class="lojas">${site.lojas.map((l) => `
+    return `<ul class="lojas">${site.lojas.filter((l) => l.url).map((l) => `
   <li class="loja" data-reveal>
     <span class="loja__rotulo">${icon('loja')} ${esc(l.rotulo)}</span>
     <${titulo} class="loja__nome">${esc(l.nome)}</${titulo}>

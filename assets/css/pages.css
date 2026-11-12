@@ -14,7 +14,7 @@
   /* fios discretos atrás do texto, nítidos à direita (frizz → liso) */
   -webkit-mask-image: linear-gradient(90deg, rgba(0,0,0,.28) 0%, rgba(0,0,0,.32) 42%, #000 62%); mask-image: linear-gradient(90deg, rgba(0,0,0,.28) 0%, rgba(0,0,0,.32) 42%, #000 62%); }
 .hero__grade { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr); gap: clamp(24px, 5vw, 72px); align-items: center; padding-bottom: clamp(40px, 6vw, 72px); }
-.hero__texto .display { max-width: 14ch; }
+.hero__texto .display { max-width: 14ch; font-size: clamp(2.2rem, 4.4vw, 3.8rem); }
 .hero__ctas { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
 .hero__arco { position: relative; justify-self: end; width: min(100%, 460px); }
 .hero__fotos {
@@ -239,7 +239,7 @@
   .pg-produto { padding-bottom: 72px; }
 }
 @media (max-width: 560px) {
-  .hero__texto .display { font-size: clamp(2.5rem, 11.5vw, 3.2rem); }
+  .hero__texto .display { font-size: clamp(2.1rem, 9vw, 2.7rem); }
   .hero__ctas .btn { width: 100%; }
   .p-hero__ctas .btn { width: 100%; }
   .motivos { grid-template-columns: 1fr; }
